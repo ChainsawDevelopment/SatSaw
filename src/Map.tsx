@@ -9,6 +9,7 @@ import worldImage from './map.svg';
 import Polyline from './libs/react-leaflet-geodesic/Polyline';
 
 import 'leaflet/dist/leaflet.css';
+import SatMarker from './SatMarker';
 
 interface Props {
     satellites: Sat.Satellites;
@@ -51,7 +52,7 @@ const SatOrbit = (props: OrbitProps): JSX.Element => {
 
     const polylines: JSX.Element[] = [];
     const baseColor = Color(props.color);
-    for (let i = 1; i < 2; i++) {
+    for (let i = 1; i < props.groundTrack.length; i++) {
         const position = i / props.groundTrack.length;
         const color = colorModification(baseColor, position);
         polylines.push(
@@ -83,13 +84,14 @@ const SatView = (props: any) : JSX.Element => {
 
     // const footprint = Sat.calculateFootprint(satPosition.alt) * 1000.0;
     const track = Sat.calculateGroundTrack(tle, moment.utc());
+    const satPosition = Sat.determinePosition(tle, moment.utc());
     const color = satDescription.colors;
 
     return (
         <>
             <SatOrbit groundTrack={track} color={color.orbit} />
             {/* <SatCircle lat={satPosition.lat} lng={satPosition.lng} footprint={footprint} color={color.circle} /> */}
-            {/* <SatMarker lat={satPosition.lat} lng={satPosition.lng} name={tle.satName} color={color.marker} /> */}
+            <SatMarker lat={satPosition.lat} lng={satPosition.lng} name={tle.satName} color={color.marker} />}
         </>
     );
 };
@@ -112,7 +114,7 @@ export const SatellitesMap = (props : Props): JSX.Element => {
     );
 
     return (
-        <div style={{ flex: '1', display: 'flex' }}>
+        <div style={{ flex: '1', display: 'flex', height: '100%' }}>
             <Map
                 center={mapConfig.center}
                 zoom={mapConfig.zoom}
@@ -124,16 +126,14 @@ export const SatellitesMap = (props : Props): JSX.Element => {
                 maxBounds={[[-90.0, -180.0], [90.0, 180.0]]}
                 attributionControl={false}
             >
-                <ImageOverlay url={worldImage} bounds={[[-90.0, -180.0], [90.0, 180.0]]}/> 
+                <ImageOverlay url={worldImage} bounds={[[-90.0, -180.0], [90.0, 180.0]]} />
                 <SatView
                     satDescription={{
                         state: props.satellites["PICSAT"],
                         colors: Sat.satColorFromIndex(0)
                     }}
                     key={`Sat-${0}`}
-                />
-                {/* <ImageOverlay url={worldImage} bounds={[[-90.0, -180.0], [90.0, 180.0]]}/> */}
-                {/* {sats} */}
+                /> 
             </Map>
         </div>
     );

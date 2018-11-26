@@ -16,9 +16,6 @@ const satellites : Sat.Satellites = {
 }
 
 const render = () => {
-
-    
-
     ReactDOM.render(
         <SatellitesMap satellites={satellites} />,
         document.getElementById("content")
