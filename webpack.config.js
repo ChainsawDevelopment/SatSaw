@@ -21,7 +21,8 @@ module.exports = {
           {
             test: /\.tsx?$/,
             use: 'awesome-typescript-loader'
-          }
+          },
+          { test: /\.(jpe?g|gif|png|svg|eot|ttf|woff|woff2)$/, loader: 'file-loader', options: { name: '[hash].[ext]' } },
         ]
       },
     resolve: {
