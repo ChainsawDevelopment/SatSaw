@@ -5,11 +5,12 @@ import { SatMap, MapConfig } from './SatMap';
 import * as Sat from './sat'
 
 const satellites : Sat.Satellites = {
-    PICSAT: {
+    PWSAT2: {
         TLE: [
-            '0 PICSAT',
-            '1 43132U 18004X   18084.90518637 +.00001736 +00000-0 +78164-4 0  9993',
-            '2 43132 097.5436 147.3314 0010912 038.1742 322.0265 15.22402283011045'
+            '0 PW-SAT 2',
+            '1 99999U 18999XXX 18323.80207747  .00000002  00000-0  00000-0 0    42',
+            '2 99999  97.7745  32.5818 0011760  98.7943 182.3934 15.00210209    20'
+            
         ],
         CurrentPosition: null,
         LookAngles: null
@@ -18,9 +19,9 @@ const satellites : Sat.Satellites = {
 
 const mapConfig: MapConfig = {
     center: new Leaflet.LatLng(0, 0),
-    zoom: 1,
     minZoom: 1,
     maxZoom: 4
+    
 };
 
 const render = () => {

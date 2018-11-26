@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Leaflet from 'leaflet';
-import { Map, ImageOverlay } from 'react-leaflet';
+import { Map, ImageOverlay, Marker } from 'react-leaflet';
 
 import * as Sat from './sat';
 import { SatView } from './SatView';
@@ -8,9 +8,11 @@ import { SatView } from './SatView';
 import worldImage from './map.svg';
 import 'leaflet/dist/leaflet.css';
 
+import fddIcon from './fdd.svg';
+import fddIcon2 from './sat.svg';
+
 export interface MapConfig {
     center: Leaflet.LatLng;
-    zoom: number;
     minZoom: number;
     maxZoom: number;
 }
@@ -34,18 +36,19 @@ export const SatMap = (props : SatellitesMapProps): JSX.Element => {
             />
         )
     );
-
+    
     return (
         <div style={{ flex: '1', display: 'flex', height: '100%' }}>
             <Map
+                zoomSnap={0.25}
                 center={props.config.center}
-                zoom={props.config.zoom}
                 style={{ flex: '1' }}
                 minZoom={props.config.minZoom}
                 maxZoom={props.config.maxZoom}
                 crs={Leaflet.CRS.EPSG4326}
                 maxBoundsViscosity={1.0}
                 maxBounds={[[-90.0, -180.0], [90.0, 180.0]]}
+                bounds={[[-90.0, -180.0], [90.0, 180.0]]}
                 attributionControl={false}
             >
                 <ImageOverlay url={worldImage} bounds={[[-90.0, -180.0], [90.0, 180.0]]} />

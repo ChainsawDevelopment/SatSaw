@@ -181,7 +181,7 @@ export const calculateSatelliteLookAngles = (tle: TLE, qth: number[], time: mome
 
 
 const colors = [
-    0,
+    200,
     180,
     60,
     240,

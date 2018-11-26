@@ -38,7 +38,7 @@ class RefreshingSatMarker extends React.Component<SatViewProps, {time: moment.Mo
     
         return (
             <>
-                <SatMarker lat={satPosition.lat} lng={satPosition.lng} name={tle.satName} color={color.marker} />}
+                <SatMarker lat={satPosition.lat} lng={satPosition.lng} name={tle.satName} color={color.marker} />
             </>
         );
     }
@@ -54,7 +54,7 @@ export const SatView = (props: SatViewProps) : JSX.Element => {
     return (
         <>
             <SatOrbit groundTrack={track} color={color.orbit} />
-            <RefreshingSatMarker satDescription={satDescription} />}
+            <RefreshingSatMarker satDescription={satDescription} />
         </>
     );
 };
