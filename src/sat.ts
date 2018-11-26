@@ -1,9 +1,6 @@
 import * as satellite from 'satellite.js';
 import * as moment from 'moment';
-
 import * as Leaflet from 'leaflet';
-
-
 
 export class LookAngles {
     public azimuth: number;
@@ -169,7 +166,7 @@ export const calculateGroundTrack = (tle: TLE, time: moment.Moment): Leaflet.Lat
     while (satelliteTime < end) {
         const position = determinePosition(tle, satelliteTime);
         groundTrack.push(position);
-        satelliteTime.add(5, 'minutes');
+        satelliteTime.add(1, 'minutes');
     }
 
     return groundTrack;

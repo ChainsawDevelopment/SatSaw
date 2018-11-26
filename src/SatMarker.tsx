@@ -24,7 +24,7 @@ const createColoredImage = (color: string): string => {
     return serializer.serializeToString(imageDocument);
 };
 
-export default (props: Props): JSX.Element => {
+export const SatMarker = (props: Props): JSX.Element => {
     const reactSpanIcon = (iconProps: { color: string }): JSX.Element => {
         const style = {
             width: '32px',

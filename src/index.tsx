@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { SatellitesMap } from './Map';
+import * as Leaflet from 'leaflet';
+import { SatMap, MapConfig } from './SatMap';
 import * as Sat from './sat'
 
 const satellites : Sat.Satellites = {
@@ -15,9 +16,16 @@ const satellites : Sat.Satellites = {
     },
 }
 
+const mapConfig: MapConfig = {
+    center: new Leaflet.LatLng(0, 0),
+    zoom: 1,
+    minZoom: 1,
+    maxZoom: 4
+};
+
 const render = () => {
     ReactDOM.render(
-        <SatellitesMap satellites={satellites} />,
+        <SatMap satellites={satellites} config={mapConfig} />,
         document.getElementById("content")
     );
 }

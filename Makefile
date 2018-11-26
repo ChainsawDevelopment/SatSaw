@@ -11,7 +11,7 @@ webpack: restore
 dist/index.html: src/index.html
 	cp ./src/index.html ./dist/index.html
 
-watch: build
+watch: restore dist/index.html
 	-webpack-dev-server
 
 .PHONY: build webpack watch restore
