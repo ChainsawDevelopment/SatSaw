@@ -8,8 +8,8 @@ import { SatView } from './SatView';
 import worldImage from './map.svg';
 import 'leaflet/dist/leaflet.css';
 
-import fddIcon from './fdd.svg';
-import fddIcon2 from './sat.svg';
+
+import fddLogo from './fdd-77-24.png'
 
 export interface MapConfig {
     center: Leaflet.LatLng;
@@ -36,6 +36,12 @@ export const SatMap = (props : SatellitesMapProps): JSX.Element => {
             />
         )
     );
+
+    const icon = new Leaflet.Icon({
+        iconUrl: fddLogo,
+        iconSize: [77, 24],
+        iconAnchor: [7, 12]
+    });
     
     return (
         <div style={{ flex: '1', display: 'flex', height: '100%' }}>
@@ -52,6 +58,10 @@ export const SatMap = (props : SatellitesMapProps): JSX.Element => {
                 attributionControl={false}
             >
                 <ImageOverlay url={worldImage} bounds={[[-90.0, -180.0], [90.0, 180.0]]} />
+                
+                <Marker 
+                    icon={icon}
+                    position={[50.2937332,18.6797681]} />
                {sats}
             </Map>
         </div>
