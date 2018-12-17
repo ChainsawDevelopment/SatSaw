@@ -28,6 +28,7 @@ module.exports = {
         extensions: [ '.tsx', '.ts', '.js' ]
     },
     devServer: {
-        contentBase: path.join(__dirname, 'dist')
+        contentBase: path.join(__dirname, 'dist'),
+        historyApiFallback: true
     }
   };
