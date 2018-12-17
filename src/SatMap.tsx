@@ -58,10 +58,10 @@ export const SatMap = (props : SatellitesMapProps): JSX.Element => {
                 attributionControl={false}
             >
                 <ImageOverlay url={worldImage} bounds={[[-90.0, -180.0], [90.0, 180.0]]} />
-                
+{/*                 
                 <Marker 
                     icon={icon}
-                    position={[50.2937332,18.6797681]} />
+                    position={[50.2937332,18.6797681]} /> */}
                {sats}
             </Map>
         </div>

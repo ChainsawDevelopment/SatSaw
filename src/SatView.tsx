@@ -1,6 +1,6 @@
 import * as React from 'react';
-import * as Sat from './sat';
 import * as moment from 'moment';
+import * as Sat from './sat';
 
 import { SatMarker } from './SatMarker';
 import { SatOrbit } from './SatOrbit';
@@ -9,10 +9,10 @@ interface SatViewProps {
     satDescription: Sat.SatDescription;
 }
 
-class RefreshingSatMarker extends React.Component<SatViewProps, {time: moment.Moment}> {
+class Refreshing extends React.Component<{interval: number, children(time: moment.Moment):void}, {time: moment.Moment}> {
     private _interval: NodeJS.Timeout;
 
-    constructor(props: SatViewProps) {
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -21,7 +21,7 @@ class RefreshingSatMarker extends React.Component<SatViewProps, {time: moment.Mo
     }
 
     componentDidMount() {
-        this._interval = setInterval(() => this.setState({time: moment.utc()}), 1000);
+        this._interval = setInterval(() => this.setState({time: moment.utc()}), this.props.interval);
     }
 
     componentWillUnmount() {
@@ -29,32 +29,23 @@ class RefreshingSatMarker extends React.Component<SatViewProps, {time: moment.Mo
     }
 
     render() {
-        const { satDescription } = this.props;
-
-        const tle = new Sat.TLE(satDescription.state.TLE);    
-        const satPosition = Sat.determinePosition(tle, this.state.time);
-        
-        const color = satDescription.colors;
-    
         return (
             <>
-                <SatMarker lat={satPosition.lat} lng={satPosition.lng} name={tle.satName} color={color.marker} />
+                {this.props.children(this.state.time)}
             </>
         );
     }
 }
 
 export const SatView = (props: SatViewProps) : JSX.Element => {
-    const { satDescription } = props;
-
-    const tle = new Sat.TLE(satDescription.state.TLE);
-    const track = Sat.calculateGroundTrack(tle, moment.utc());
-    const color = satDescription.colors;
-
     return (
         <>
-            <SatOrbit groundTrack={track} color={color.orbit} />
-            <RefreshingSatMarker satDescription={satDescription} />
+            <Refreshing interval={60 * 1000}>
+                {time => <SatOrbit satDescription={props.satDescription} time={time} />}
+            </Refreshing>
+            <Refreshing interval={1000}>
+                {time => <SatMarker satDescription={props.satDescription} time={time} />}
+            </Refreshing>
         </>
     );
 };

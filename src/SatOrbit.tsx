@@ -1,10 +1,12 @@
 import * as React from 'react';
 import * as Leaflet from 'leaflet';
 import * as Color from 'color';
+import * as moment from 'moment';
+import * as Sat from './sat';
 
 import Polyline from './libs/react-leaflet-geodesic/Polyline';
 
-interface OrbitProps {
+interface OrbitViewProps {
     groundTrack: Leaflet.LatLng[];
     color: string;
 }
@@ -13,7 +15,7 @@ const fadeIn = 10.0;
 const fadeOut = 10.0;
 const hueShift = 50.0;
 
-export const SatOrbit = (props: OrbitProps): JSX.Element => {
+export const SatOrbitView = (props: OrbitViewProps): JSX.Element => {
     
     const colorModification = (baseColor: Color, position: number): Color => {
         const hue = baseColor.hue();
@@ -49,3 +51,17 @@ export const SatOrbit = (props: OrbitProps): JSX.Element => {
         </>
     );
 };
+
+interface OrbitProps {
+    satDescription: Sat.SatDescription;
+    time: moment.Moment;
+}
+
+export const SatOrbit = (props: OrbitProps): JSX.Element => {
+
+    const tle = new Sat.TLE(props.satDescription.state.TLE);
+    const track = Sat.calculateGroundTrack(tle, props.time);
+    const color = props.satDescription.colors;
+
+    return <SatOrbitView groundTrack={track} color={color.orbit} />
+}
