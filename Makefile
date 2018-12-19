@@ -1,5 +1,6 @@
 PATH			:= $(CURDIR)/node_modules/.bin:$(PATH)
 WEBPACK_ARGS 	?= -d
+API_PORT		?= 3000
 
 build: webpack dist/index.html
 
@@ -15,4 +16,7 @@ dist/index.html: src/index.html
 watch: restore dist/index.html
 	-webpack-dev-server $(WEBPACK_ARGS)
 
-.PHONY: build webpack watch restore
+api:
+	node api/index.js $(API_PORT)
+
+.PHONY: build webpack watch restore api
