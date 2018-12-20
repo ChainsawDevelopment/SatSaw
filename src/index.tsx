@@ -68,7 +68,12 @@ class SatFromUrlProvider extends React.Component<SatFromUrlProvider.Props, SatFr
 
         // if number, then treat it as norad id
         else if (isNaN(+sat) === false) {
-            console.error("Norad ID not supported yet")
+            const apiBase = (window as any).apiBaseUrl;
+            fetch(`${apiBase}tle/${+sat}`)
+                .then(r => r.text())
+                .then(tle => {
+                    this.setState({visibleSats: this.makeVisibleSat(tle)});
+                });
         }
         else {
         // treat it as entire TLE - base64 encoded
